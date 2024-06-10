@@ -22,13 +22,12 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.11</version>
-      <scope>test</scope>
+      <version>4.12</version>
+
     </dependency>
   </dependencies>
 
   <build>
-    <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
       <plugins>
         <!-- clean lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#clean_Lifecycle -->
         <plugin>
@@ -69,25 +68,47 @@
           <artifactId>maven-project-info-reports-plugin</artifactId>
           <version>3.0.0</version>
         </plugin>
+<!--        <plugin>-->
+<!--&lt;!&ndash;          https://maven.apache.org/plugins/maven-jar-plugin/&ndash;&gt;-->
+<!--          <groupId>org.apache.maven.plugins</groupId>-->
+<!--          <artifactId>maven-jar-plugin</artifactId>-->
+<!--          <version>3.4.1</version>-->
+<!--          <configuration>-->
+<!--            <archive>-->
+<!--              <manifest>-->
+<!--                <addClasspath>true</addClasspath>-->
+<!--                <classpathPrefix>lib/</classpathPrefix>-->
+<!--                <mainClass>io.patriot_framework.data_gen_sync_demo.App</mainClass>-->
+<!--              </manifest>-->
+<!--            </archive>-->
+<!--&lt;!&ndash;            <includes>&ndash;&gt;-->
+<!--&lt;!&ndash;              <include>**/service/*</include>&ndash;&gt;-->
+<!--&lt;!&ndash;            </includes>&ndash;&gt;-->
+<!--          </configuration>-->
+<!--        </plugin>-->
+
         <plugin>
-<!--          https://maven.apache.org/plugins/maven-jar-plugin/-->
           <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-jar-plugin</artifactId>
-          <version>3.4.1</version>
-          <configuration>
-            <archive>
-              <manifest>
-                <addClasspath>true</addClasspath>
-                <classpathPrefix>lib/</classpathPrefix>
-                <mainClass>io.patriot_framework.data_gen_sync_demo.App</mainClass>
-              </manifest>
-            </archive>
-<!--            <includes>-->
-<!--              <include>**/service/*</include>-->
-<!--            </includes>-->
-          </configuration>
+          <artifactId>maven-shade-plugin</artifactId>
+          <version>3.6.0</version>
+          <executions>
+            <execution>
+              <phase>package</phase>
+              <goals>
+                <goal>shade</goal>
+              </goals>
+              <configuration>
+                <transformers>
+                  <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                    <mainClass>io.patriot_framework.data_gen_sync_demo.App</mainClass>
+                  </transformer>
+                </transformers>
+              </configuration>
+            </execution>
+          </executions>
         </plugin>
+
       </plugins>
-    </pluginManagement>
+
   </build>
 </project>
